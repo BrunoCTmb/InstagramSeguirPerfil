@@ -6,6 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from time import sleep
+from selenium.webdriver.common.keys import Keys
 
 class BotSeguidor:
     def __init__(self):
@@ -29,18 +30,21 @@ class BotSeguidor:
         pu_botao2.click()
 
     def follow_all(self):
+
         ver_perfis =  WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="react-root"]/section/main/section/div[3]/div[2]/div[1]/a')))
         ver_perfis.click()
 
-        self.perfis = self.browser.find_elements_by_tag_name('button')
-        for cada_perfil in self.perfis:
+        perfis = self.browser.find_elements_by_tag_name('button')
+    
+        for cada_perfil in perfis:
             cada_perfil.click()
-        
+            #html.send_keys(Keys.PAGE_DOWN)
+          
 
-
-bot = BotSeguidor()
-bot.login()
-
-for c in range(3):  
+for c in range(3):
+    bot = BotSeguidor()
+    bot.login()
     bot.follow_all()
-    sleep(5)
+    bot.browser.refresh()
+    bot.browser.close()
+    sleep(3)
